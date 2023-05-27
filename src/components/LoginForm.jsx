@@ -10,8 +10,9 @@ import {
 import { Link } from "react-router-dom";
 import { loginUser } from "../utils/Api"
 import { useState } from "react";
+import { useHistory } from 'react-router-dom';
 const LoginForm = () => {
-  
+  const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
@@ -36,6 +37,7 @@ const LoginForm = () => {
       //Handle successfull sign-in
       const token = response.data.token 
       setSuccessMessage('LogIn successful!',token);
+      history.push('/dashboard');
 
     })
     .catch((error) => {
