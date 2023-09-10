@@ -1,18 +1,58 @@
+// App.js
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-import LoginForm from './components/LoginForm';
-import SignupForm from './components/SignupForm';
-import DashBoard from './components/Dashboard';
+import PublicLayout from './layouts/PublicLayout';
+import PrivateLayout from './layouts/PrivateLayout';
+import MainContent from './components/MainContent';
+import LoginForm from './pages/LoginForm'
+import SignupForm from './pages/SignupForm'
+import UsersPage from './pages/UsersPage'
+import ProductsPage from './pages/ProductsPage'
+import DashboardHome from './pages/DashboardHome'
+import PageNotFound from './pages/PageNotFound'
+import NotFoundPageLayout from './layouts/NotFoundPageLayout'
+import './App.css';
+import { useState } from 'react';
 
-export default function App() {
-    return (
-        <Router>
- 
+
+const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/" render={() => <Redirect to="/login" />} />
+        <Route exact path="/login" component={LoginForm}>
+          <PublicLayout>
+            <MainContent content={<LoginForm />} />
+          </PublicLayout>
+        </Route>
+        <Route exact path="/signup" component={SignupForm}>
+          <PublicLayout>
+            <MainContent content={<SignupForm />} />
+          </PublicLayout>
+        </Route>
+        <Route>
+          <PrivateLayout isAuthenticated={isAuthenticated} path="/dashboard">
             <Switch>
-            <   Route exact path="/" component={LoginForm} />
-                <Route exact path="/login" component={LoginForm} />
-                <Route exact path="/signup" component={SignupForm} />
-                <Route exact path="/dashboard" component={DashBoard} />
+              <Route exact path="/dashboard/users" component={UsersPage}>
+                <MainContent content={<UsersPage />} />
+              </Route>
+              <Route exact path="/dashboard/products" component={ProductsPage}>
+                <MainContent content={<ProductsPage />} />
+              </Route>
+              <Route path="/dashboard" component={DashboardHome}>
+                <MainContent content={<DashboardHome />} />
+              </Route>
+              <Route path="*" component={PageNotFound}>
+                <NotFoundPageLayout>
+                  <PageNotFound />
+                </NotFoundPageLayout>
+              </Route>
             </Switch>
-        </Router>
-    );
-}
+          </PrivateLayout>
+        </Route>
+      </Switch>
+    </Router>
+  );
+};
+
+export default App;

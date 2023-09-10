@@ -17,6 +17,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
   const [errorMessage, setErrorMessage] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
 
   const handleSubmit = (event) => {
@@ -36,9 +37,12 @@ const LoginForm = () => {
 
       //Handle successfull sign-in
       const token = response.data.token 
-      setSuccessMessage('LogIn successful!',token);
-      history.push('/dashboard');
-
+      if(token){
+        setSuccessMessage('LogIn successful!',token);
+        setIsAuthenticated(true);
+        history.push('/dashboard');
+      }
+      
     })
     .catch((error) => {
       console.log(error.response.data)

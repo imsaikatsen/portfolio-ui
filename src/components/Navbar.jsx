@@ -1,16 +1,23 @@
-import React from 'react'
-import {AppBar,Toolbar, Typography} from '@mui/material'
+// components/Navbar.js
+import React from 'react';
 
 const Navbar = () => {
-    return (
-        <AppBar position='static'>
-            <Toolbar>
-                <Typography variant='h6'>
-                    Dashboard
-                </Typography>
-            </Toolbar>
-        </AppBar>
-    )
-}
+  return (
+    <nav style={styles.navbar}>
+      <h1 style={styles.logo}>Dashboard</h1>
+    </nav>
+  );
+};
 
-export default Navbar
+const styles = {
+  navbar: {
+    backgroundColor: '#2196F3',
+    color: '#fff',
+    padding: '1rem',
+  },
+  logo: {
+    margin: '0',
+  },
+};
+
+export default Navbar;
