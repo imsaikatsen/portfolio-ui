@@ -1,5 +1,5 @@
 // components/PublicLayout.js
-import React from 'react';
+import React from "react";
 
 const PublicLayout = ({ children }) => {
   return <div>{children}</div>;
