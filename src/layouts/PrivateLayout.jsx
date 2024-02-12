@@ -1,14 +1,14 @@
-// components/PrivateLayout.js
 import React from "react";
+import { Redirect } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import { Redirect } from "react-router-dom";
 
-const PrivateLayout = ({ isAuthenticated, children }) => {
-  // if (!isAuthenticated) {
-  //   // Redirect to the login page if not authenticated
-  //   return <Redirect to="/login" />;
-  // }
+const PrivateLayout = ({ children }) => {
+  const isAuthenticated = localStorage.getItem("token");
+  if (!isAuthenticated) {
+    // Redirect to the login page if not authenticated
+    return <Redirect to="/login" />;
+  }
   return (
     <div>
       <Navbar />

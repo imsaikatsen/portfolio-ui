@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
 const User = () => {
   return (
     <nav>
-      <h1>User</h1>
+      <h1>User List</h1>
     </nav>
   );
 };

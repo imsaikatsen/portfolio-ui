@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
 const Product = () => {
   return (
     <nav>
-      <h1>Product </h1>
+      <h1>Product List</h1>
     </nav>
   );
 };

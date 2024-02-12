@@ -23,31 +23,28 @@ const LoginForm = () => {
     event.preventDefault();
     setErrorMessage(""); // Reset error message
 
-    //create an object with the user credentioals
-
+    // Create an object with the user credentials
     const userData = {
       email,
       password,
     };
 
-    //Call the API endpoint to sign in the user
+    // Call the API endpoint to sign in the user
     loginUser(userData)
       .then((response) => {
-        //Handle successfull sign-in
+        // Handle successful sign-in
         const token = response.data.token;
         if (token) {
-          setSuccessMessage("LogIn successful!", token);
-          setIsAuthenticated(true);
-          console.log("Redirecting to dashboard");
+          localStorage.setItem("token", token);
+          setIsAuthenticated(true); // Update authentication state
           history.push("/dashboard");
         }
       })
       .catch((error) => {
-        console.log(error.response.data);
         if (error.response.data) {
           setErrorMessage(error.response.data);
         } else {
-          setErrorMessage("AN error occured during registration");
+          setErrorMessage("An error occurred during login");
         }
       });
   };
