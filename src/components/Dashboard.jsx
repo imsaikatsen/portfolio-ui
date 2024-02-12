@@ -1,7 +1,5 @@
-// Dashboard.js
-import { Container, Grid, Paper } from "@mui/material";
-import Navbar from "./Navbar";
-import Sidebar from "./Sidebar";
+import React from "react";
+import Typography from "@mui/material/Typography";
 
 const styles = {
   dashboardContainer: {
@@ -11,23 +9,20 @@ const styles = {
   contentContainer: {
     flex: 1,
   },
+  welcomeText: {
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#F3797E",
+  },
 };
 
 const Dashboard = () => {
   return (
-    <Paper elevation={0} style={styles.dashboardContainer}>
-      <Navbar />
-      <Container maxWidth="xl" style={styles.contentContainer}>
-        <Grid container>
-          <Grid item md={4}>
-            <Sidebar />
-          </Grid>
-          <Grid item md={8}>
-            {/* Content for the main section of your dashboard */}
-          </Grid>
-        </Grid>
-      </Container>
-    </Paper>
+    <div>
+      <Typography variant="h3" gutterBottom style={styles.welcomeText}>
+        WELCOME TO MY DASHBOARD
+      </Typography>
+    </div>
   );
 };
 

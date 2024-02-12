@@ -1,6 +1,5 @@
 import React from "react";
-
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 const Navbar = () => {
   const history = useHistory();
@@ -11,7 +10,9 @@ const Navbar = () => {
   };
   return (
     <nav style={styles.navbar}>
-      <h1 style={styles.logo}>Dashboard</h1>
+      <Link to="/dashboard/" style={styles.link}>
+        Dashboard
+      </Link>
       <div style={styles.logoutButton}>
         <button style={styles.button} onClick={handleLogout}>
           Logout
@@ -23,7 +24,7 @@ const Navbar = () => {
 
 const styles = {
   navbar: {
-    backgroundColor: "#2196F3",
+    backgroundColor: "#34B1AA",
     color: "#fff",
     padding: "1rem",
     display: "flex",
@@ -42,6 +43,10 @@ const styles = {
     border: "none",
     cursor: "pointer",
     fontSize: "1rem",
+  },
+  link: {
+    textDecoration: "none",
+    color: "#fff",
   },
 };
 

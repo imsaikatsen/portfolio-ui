@@ -9,15 +9,33 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { loginUser } from "../utils/Api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+
 const LoginForm = () => {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [keepLoggedIn, setKeepLoggedIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("rememberedEmail");
+    if (storedEmail) {
+      setEmail(storedEmail);
+    }
+    const storedPassword = localStorage.getItem("rememberedPassword");
+    if (storedPassword) {
+      // Decrypt the password if it's encrypted
+      // Here we are assuming the password is stored in plain text for simplicity
+      setPassword(storedPassword);
+    }
+  }, []);
+
+  const handleCheckboxChange = (event) => {
+    setKeepLoggedIn(event.target.checked);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -27,6 +45,7 @@ const LoginForm = () => {
     const userData = {
       email,
       password,
+      keepLoggedIn,
     };
 
     // Call the API endpoint to sign in the user
@@ -35,6 +54,13 @@ const LoginForm = () => {
         // Handle successful sign-in
         const token = response.data.token;
         if (token) {
+          if (keepLoggedIn) {
+            localStorage.setItem("rememberedEmail", email);
+            localStorage.setItem("rememberedPassword", password);
+          } else {
+            localStorage.removeItem("rememberedEmail");
+            localStorage.removeItem("rememberedPassword");
+          }
           localStorage.setItem("token", token);
           setIsAuthenticated(true); // Update authentication state
           history.push("/dashboard");
@@ -48,6 +74,7 @@ const LoginForm = () => {
         }
       });
   };
+
   return (
     <form onSubmit={handleSubmit}>
       <div style={{ padding: 100 }}>
@@ -67,6 +94,7 @@ const LoginForm = () => {
             <Grid item xs={12}>
               <TextField
                 label="Email"
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 style={{ width: 400 }}
               ></TextField>
@@ -74,19 +102,19 @@ const LoginForm = () => {
             <Grid item xs={12}>
               <TextField
                 label="Password"
-                type={"password"}
+                type="password"
+                value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 style={{ width: 400 }}
               ></TextField>
             </Grid>
-            {errorMessage && <p sx={{ color: "red" }}>{errorMessage}</p>}
+            {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
             <Grid item xs={12}>
               <FormControlLabel
                 control={
                   <Checkbox
-                    //   checked={checked}
-                    //   onChange={handleChange}
-                    label={"Keep me logged in"}
+                    checked={keepLoggedIn}
+                    onChange={handleCheckboxChange}
                     inputProps={{ "aria-label": "primary checkbox" }}
                   />
                 }
@@ -95,10 +123,7 @@ const LoginForm = () => {
             </Grid>
             <Grid item xs={12}>
               <Typography>
-                Didn't Sign Up Yet ?
-                <Link exact to="/signup">
-                  Sign Up
-                </Link>
+                Didn't Sign Up Yet ? <Link to="/signup">Sign Up</Link>
               </Typography>
             </Grid>
             <Grid item xs={12} style={{ paddingBottom: 30 }}>
@@ -108,10 +133,8 @@ const LoginForm = () => {
                 variant="contained"
                 color="primary"
               >
-                {" "}
-                Login{" "}
+                Login
               </Button>
-              {successMessage && <p>{successMessage}</p>}
             </Grid>
           </Grid>
         </Paper>

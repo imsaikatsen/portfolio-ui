@@ -10,6 +10,7 @@ import PrivateLayout from "../layouts/PrivateLayout";
 import MainContent from "../components/MainContent";
 import LoginForm from "../pages/LoginForm";
 import SignupForm from "../pages/SignupForm";
+import Dashboard from "../components/Dashboard";
 import UsersPage from "../pages/UsersPage";
 import ProductsPage from "../pages/ProductsPage";
 import PageNotFound from "../pages/PageNotFound";
@@ -36,11 +37,14 @@ const RouterComponent = () => {
             <MainContent content={<SignupForm />} />
           </PublicLayout>
         </Route>
-        <Route path="/dashboard">
+        <Route>
           <PrivateLayout isAuthenticated={isAuthenticated}>
             <Switch>
+              <Route exact path="/dashboard" component={Dashboard}>
+                <MainContent content={<Dashboard />} />
+              </Route>
               <Route exact path="/dashboard/users" component={UsersPage}>
-                <MainContent content={<UsersPage />} />{" "}
+                <MainContent content={<UsersPage />} />
               </Route>
               <Route exact path="/dashboard/products" component={ProductsPage}>
                 <MainContent content={<ProductsPage />} />
