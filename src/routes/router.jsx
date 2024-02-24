@@ -8,12 +8,16 @@ import {
 import PublicLayout from "../layouts/PublicLayout";
 import PrivateLayout from "../layouts/PrivateLayout";
 import MainContent from "../components/MainContent";
+
 import LoginForm from "../pages/LoginForm";
 import SignupForm from "../pages/SignupForm";
 import Dashboard from "../components/Dashboard";
 import UsersPage from "../pages/UsersPage";
-import ProductsPage from "../pages/ProductsPage";
+// import ProductsPage from "../pages/ProductsPage";
+import BlogList from "../components/BlogList";
+
 import PageNotFound from "../pages/PageNotFound";
+import Home from "../pages/users/Home";
 import "../App.css";
 
 const RouterComponent = () => {
@@ -22,17 +26,17 @@ const RouterComponent = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
-          <Redirect to="/login" />
-        </Route>
-        <Route exact path="/login">
+        <Route exact path="/portfolio" component={Home} />
+        <Route exact path="/" component={Home} />
+
+        <Route exact path="/admin/dashboard/signin">
           <PublicLayout>
             <MainContent
               content={<LoginForm onLogin={() => setIsAuthenticated(true)} />}
             />
           </PublicLayout>
         </Route>
-        <Route exact path="/signup">
+        <Route exact path="/admin/dashboard/signup">
           <PublicLayout>
             <MainContent content={<SignupForm />} />
           </PublicLayout>
@@ -40,14 +44,14 @@ const RouterComponent = () => {
         <Route>
           <PrivateLayout isAuthenticated={isAuthenticated}>
             <Switch>
-              <Route exact path="/dashboard" component={Dashboard}>
+              <Route exact path="/admin/dashboard" component={Dashboard}>
                 <MainContent content={<Dashboard />} />
               </Route>
-              <Route exact path="/dashboard/users" component={UsersPage}>
+              <Route exact path="/admin/dashboard/users" component={UsersPage}>
                 <MainContent content={<UsersPage />} />
               </Route>
-              <Route exact path="/dashboard/products" component={ProductsPage}>
-                <MainContent content={<ProductsPage />} />
+              <Route exact path="/admin/dashboard/blogs" component={BlogList}>
+                <MainContent content={<BlogList />} />
               </Route>
             </Switch>
           </PrivateLayout>

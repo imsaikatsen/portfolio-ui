@@ -11,8 +11,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { registerUser } from "../utils/Api";
 
-import { useHistory } from 'react-router-dom';
-
+import { useHistory } from "react-router-dom";
 
 const SignupForm = () => {
   const history = useHistory();
@@ -23,8 +22,8 @@ const SignupForm = () => {
     password: "",
   });
 
-  const [successMessage, setSuccessMessage] = useState('')
-  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (event) => {
     setUserData({
@@ -35,22 +34,26 @@ const SignupForm = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    setErrorMessage('');
+    setErrorMessage("");
     registerUser(userData)
       .then((response) => {
         // console.log("I am here after then call");
         // Handle successful registration
-        setSuccessMessage('Registration successful!');
-        history.push('/login');
+        setSuccessMessage("Registration successful!");
+        history.push("/login");
         console.log("Registration successful:", response.data);
       })
       .catch((error) => {
         console.error("Registration error:", error);
         // Handle registration error
 
-        console.log(error.response.data)
-        if(error.response && error.response.data && error.response.data.error) {
-          setErrorMessage(error.response.data.error)
+        console.log(error.response.data);
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.error
+        ) {
+          setErrorMessage(error.response.data.error);
         } else {
           setErrorMessage("AN error occured during registration");
         }
@@ -109,7 +112,7 @@ const SignupForm = () => {
                 onChange={handleChange}
               ></TextField>
             </Grid>
-            {errorMessage && <p sx={{ color: 'red' }}>{errorMessage}</p>}
+            {errorMessage && <p sx={{ color: "red" }}>{errorMessage}</p>}
             <Grid item xs={12}>
               <FormControlLabel
                 control={
@@ -126,8 +129,8 @@ const SignupForm = () => {
             <Grid item xs={12}>
               <Typography>
                 Are you already Sign Up?{" "}
-                <Link exact to="/login">
-                  Log In
+                <Link exact to="/dashboard/signin">
+                  Sign In
                 </Link>
               </Typography>
             </Grid>

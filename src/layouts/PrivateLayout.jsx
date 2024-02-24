@@ -7,7 +7,7 @@ const PrivateLayout = ({ children }) => {
   const isAuthenticated = localStorage.getItem("token");
   if (!isAuthenticated) {
     // Redirect to the login page if not authenticated
-    return <Redirect to="/login" />;
+    return <Redirect to="/admin/dashboard/signin" />;
   }
   return (
     <div>

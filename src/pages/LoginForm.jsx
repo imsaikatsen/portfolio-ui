@@ -63,7 +63,7 @@ const LoginForm = () => {
           }
           localStorage.setItem("token", token);
           setIsAuthenticated(true); // Update authentication state
-          history.push("/dashboard");
+          history.push("/admin/dashboard");
         }
       })
       .catch((error) => {
@@ -123,7 +123,8 @@ const LoginForm = () => {
             </Grid>
             <Grid item xs={12}>
               <Typography>
-                Didn't Sign Up Yet ? <Link to="/signup">Sign Up</Link>
+                Didn't Sign Up Yet ?{" "}
+                <Link to="/admin/dashboard/signup">Sign Up</Link>
               </Typography>
             </Grid>
             <Grid item xs={12} style={{ paddingBottom: 30 }}>
@@ -133,7 +134,7 @@ const LoginForm = () => {
                 variant="contained"
                 color="primary"
               >
-                Login
+                Sign In
               </Button>
             </Grid>
           </Grid>

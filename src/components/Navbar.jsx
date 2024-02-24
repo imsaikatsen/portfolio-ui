@@ -5,12 +5,12 @@ const Navbar = () => {
   const history = useHistory();
   const handleLogout = () => {
     localStorage.removeItem("token");
-    history.push("/login");
+    history.push("/dashboard/signin");
     console.log("Logout Successfull");
   };
   return (
     <nav style={styles.navbar}>
-      <Link to="/dashboard/" style={styles.link}>
+      <Link to="/admin/dashboard/" style={styles.link}>
         Dashboard
       </Link>
       <div style={styles.logoutButton}>
