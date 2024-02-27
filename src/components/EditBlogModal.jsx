@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+
 const EditBlogModal = ({ isOpen, onRequestClose, onSubmit, selectedBlog }) => {
-  const [title, setTitle] = useState(selectedBlog ? selectedBlog.title : "");
-  const [description, setDescription] = useState(
-    selectedBlog ? selectedBlog.description : ""
-  );
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   useEffect(() => {
     if (selectedBlog) {
@@ -20,9 +19,7 @@ const EditBlogModal = ({ isOpen, onRequestClose, onSubmit, selectedBlog }) => {
       title,
       description,
     };
-    onSubmit(selectedBlog._id, updatedData);
-    setTitle("");
-    setDescription("");
+    onSubmit(updatedData);
   };
 
   return (

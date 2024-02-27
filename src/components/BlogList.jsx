@@ -1,4 +1,4 @@
-import { getBlogs, createBlog, updateBlog } from "../utils/Api";
+import { getBlogs, createBlog, updateBlog, deleteBlog } from "../utils/Api";
 import React, { useState, useEffect } from "react";
 import CreateBlogModal from "./CreateBlogModal";
 import EditBlogModal from "./EditBlogModal";
@@ -7,12 +7,15 @@ import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 const BlogList = () => {
   const [blogs, setBlogs] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedBlog, setSelectedBlog] = useState(null);
 
   useEffect(() => {
+    fetchBlogs();
+  }, []);
+
+  const fetchBlogs = () => {
     getBlogs()
       .then((response) => {
         setBlogs(response.data);
@@ -20,29 +23,43 @@ const BlogList = () => {
       .catch((error) => {
         console.error("Error fetching blogs:", error);
       });
-  }, []);
+  };
 
   const handleCreateBlog = (blogData) => {
     createBlog(blogData)
       .then((response) => {
-        // Update state or perform any necessary actions after creating the blog
         console.log("Blog created:", response.data);
+        fetchBlogs(); // Refresh blogs after creation
+        setIsCreateModalOpen(false);
       })
       .catch((error) => {
         console.error("Error creating blog:", error);
       });
   };
-  const handleEditBlog = (blogId, updatedData) => {
-    updateBlog(blogId, updatedData)
+
+  const handleEditBlog = (updatedData) => {
+    updateBlog(selectedBlog._id, updatedData)
       .then((response) => {
         console.log("Blog updated:", response.data);
-        // Close the modal or perform any other action after successful update
-        setIsModalOpen(false);
+        fetchBlogs(); // Refresh blogs after update
+        setIsEditModalOpen(false);
       })
       .catch((error) => {
         console.error("Error updating blog:", error);
-        // Handle error
       });
+  };
+
+  const handleDeleteBlog = (blogId) => {
+    if (window.confirm("Are you sure you want to delete this blog?")) {
+      deleteBlog(blogId)
+        .then(() => {
+          console.log("Blog deleted successfully");
+          fetchBlogs(); // Refresh blogs after deletion
+        })
+        .catch((error) => {
+          console.error("Error deleting blog:", error);
+        });
+    }
   };
 
   return (
@@ -51,7 +68,7 @@ const BlogList = () => {
         <h1 className="text-3xl font-bold">Blogs List</h1>
         <button
           className="flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-md"
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => setIsCreateModalOpen(true)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -70,16 +87,14 @@ const BlogList = () => {
           New Blog
         </button>
         <CreateBlogModal
-          isOpen={isModalOpen}
-          onRequestClose={() => setIsModalOpen(false)}
+          isOpen={isCreateModalOpen}
+          onRequestClose={() => setIsCreateModalOpen(false)}
           onSubmit={handleCreateBlog}
         />
         <EditBlogModal
-          isOpen={isModalOpen}
-          onRequestClose={() => setIsModalOpen(false)}
-          onSubmit={(updatedData) =>
-            handleEditBlog(selectedBlog._id, updatedData)
-          }
+          isOpen={isEditModalOpen}
+          onRequestClose={() => setIsEditModalOpen(false)}
+          onSubmit={handleEditBlog}
           selectedBlog={selectedBlog}
         />
       </div>
@@ -124,13 +139,16 @@ const BlogList = () => {
                   <button
                     className="mr-2 text-gray-600 hover:text-gray-900 "
                     onClick={() => {
-                      setSelectedBlog(blog); // Assuming blog is the data of the selected blog
-                      setIsModalOpen(true);
+                      setSelectedBlog(blog); // Select the blog to edit
+                      setIsEditModalOpen(true);
                     }}
                   >
                     <FontAwesomeIcon icon={faEdit} />
                   </button>
-                  <button className="text-red-600 hover:text-red-900">
+                  <button
+                    className="text-red-600 hover:text-red-900"
+                    onClick={() => handleDeleteBlog(blog._id)}
+                  >
                     <FontAwesomeIcon icon={faTrashAlt} />
                   </button>
                 </td>

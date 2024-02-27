@@ -18,6 +18,16 @@ export const getBlogs = (data) => {
 export const createBlog = (data) => {
   return axios.post(`${API_BASE_URL}/blog/add-blog`, data);
 };
-export const updateBlog = (blogId, updatedData) => {
-  return axios.post(`${API_BASE_URL}/blog/${blogId}`, updatedData);
+export const updateBlog = async (id, updatedData) => {
+  return axios.put(`${API_BASE_URL}/blog/${id}`, JSON.stringify(updatedData), {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+export const deleteBlog = (id) => {
+  return axios.delete(`${API_BASE_URL}/blog/${id}`);
 };
