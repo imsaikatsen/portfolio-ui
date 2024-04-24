@@ -1,9 +1,12 @@
 import React from "react";
+import TopBar from "../../components/ui/TopBar";
+import About from "../../components/ui/About";
 
 const Home = () => {
   return (
     <div>
-      <h1>Hello World</h1>
+      <TopBar />
+      <About />
     </div>
   );
 };
