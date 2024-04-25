@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const TopBar = () => {
   return (
@@ -6,27 +7,44 @@ const TopBar = () => {
       <div className="container mx-auto">
         <ul className="flex items-center">
           <li>
-            <a
-              href="/about"
-              className="text-black font-bold hover:text-orange-300"
+            <NavLink
+              exact
+              to="/about"
+              activeClassName="font-bold"
+              className="text-black hover:text-orange-300"
             >
               Saikat Sen
-            </a>
+            </NavLink>
           </li>
           <li className="ml-5">
-            <a href="/about" className="text-black hover:text-orange-300">
+            <NavLink
+              exact
+              to="/about"
+              activeClassName="font-bold"
+              className="text-black hover:text-orange-300"
+            >
               About
-            </a>
+            </NavLink>
           </li>
           <li className="ml-5">
-            <a href="/projects" className="text-black hover:text-orange-300">
+            <NavLink
+              exact
+              to="/projects"
+              activeClassName="font-bold"
+              className="text-black hover:text-orange-300"
+            >
               Projects
-            </a>
+            </NavLink>
           </li>
           <li className="ml-5">
-            <a href="/blog" className="text-black hover:text-orange-300">
+            <NavLink
+              exact
+              to="/blog"
+              activeClassName="font-bold"
+              className="text-black hover:text-orange-300"
+            >
               Blog
-            </a>
+            </NavLink>
           </li>
         </ul>
       </div>
