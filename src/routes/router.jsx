@@ -11,6 +11,7 @@ import MainContent from "../components/MainContent";
 import About from "../components/ui/About";
 import Projects from "../components/ui/Projects";
 import Blog from "../components/ui/Blog";
+import ProjectList from "../components/myprojects/ProjectList";
 
 import LoginForm from "../pages/LoginForm";
 import SignupForm from "../pages/SignupForm";
@@ -63,6 +64,13 @@ const RouterComponent = () => {
                 </Route>
                 <Route exact path="/admin/dashboard/blogs" component={BlogList}>
                   <MainContent content={<BlogList />} />
+                </Route>
+                <Route
+                  exact
+                  path="/admin/dashboard/projects"
+                  component={ProjectList}
+                >
+                  <MainContent content={<ProjectList />} />
                 </Route>
               </Switch>
             </PrivateLayout>

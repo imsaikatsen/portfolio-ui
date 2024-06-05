@@ -5,7 +5,7 @@ const Navbar = () => {
   const history = useHistory();
   const handleLogout = () => {
     localStorage.removeItem("token");
-    history.push("/dashboard/signin");
+    history.push("/admin/dashboard/signin");
     console.log("Logout Successfull");
   };
   return (

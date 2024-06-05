@@ -16,6 +16,11 @@ const Sidebar = () => {
             Blogs
           </Link>
         </li>
+        <li style={styles.sidebarItem}>
+          <Link to="/admin/dashboard/projects" style={styles.link}>
+            Projects
+          </Link>
+        </li>
       </ul>
     </aside>
   );
