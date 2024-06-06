@@ -12,7 +12,7 @@ import {
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 
-import profilePicture from "../../Assets/img/rose.jpg";
+import profilePicture from "../../Assets/img/saikat_formal_2024.png";
 
 const About = () => {
   const headingStyle = {
@@ -25,11 +25,7 @@ const About = () => {
       <div class=" grid grid-cols-2 gap-3 pt-4">
         <div class=" grid grid-cols-2 gap-5">
           <div>
-            <img
-              src={profilePicture}
-              alt="Profile"
-              className="h-100 w-100 rounded-full"
-            />
+            <img src={profilePicture} alt="Profile" />
           </div>
           <div class=" pb-2">
             <h1 style={headingStyle} className="font-bold text-black pb-2">
