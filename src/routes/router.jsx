@@ -11,6 +11,7 @@ import MainContent from "../components/MainContent";
 import About from "../components/ui/About";
 import Projects from "../components/ui/Projects";
 import Blog from "../components/ui/Blog";
+import ViewBlog from "../components/ui/ViewBlog";
 import ProjectList from "../components/myprojects/ProjectList";
 
 import LoginForm from "../pages/LoginForm";
@@ -36,6 +37,7 @@ const RouterComponent = () => {
           <Route exact path="/about" component={About} />
           <Route exact path="/projects" component={Projects} />
           <Route exact path="/blog" component={Blog} />
+          <Route exact path="/blog/:id" component={ViewBlog} />
 
           <Route exact path="/admin/dashboard/signin">
             <PublicLayout>

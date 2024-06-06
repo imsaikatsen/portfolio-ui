@@ -15,21 +15,29 @@ export const getUsers = (userData) => {
 export const getBlogs = (data) => {
   return axios.get(`${API_BASE_URL}/api/blog/get-all-blogs`, data);
 };
-export const createBlog = (data) => {
-  return axios.post(`${API_BASE_URL}/api/blog/add-blog`, data);
+export const getBlog = (id) => {
+  return axios.get(`${API_BASE_URL}/api/blog/${id}`);
+};
+export const createBlog = (formData) => {
+  return axios.post(`${API_BASE_URL}/api/blog/add-blog`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 export const updateBlog = async (id, updatedData) => {
-  return axios.put(
-    `${API_BASE_URL}/api/blog/${id}`,
-    JSON.stringify(updatedData),
-    {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const formData = new FormData();
+  formData.append("title", updatedData.title);
+  formData.append("description", updatedData.description);
+  if (updatedData.image) {
+    formData.append("blogImage", updatedData.image);
+  }
+
+  return axios.put(`${API_BASE_URL}/api/blog/${id}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 
 export const deleteBlog = (id) => {

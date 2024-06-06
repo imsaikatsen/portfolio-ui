@@ -4,6 +4,7 @@ import CreateBlogModal from "./CreateBlogModal";
 import EditBlogModal from "./EditBlogModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
 
 const BlogList = () => {
   const [blogs, setBlogs] = useState([]);
@@ -50,16 +51,27 @@ const BlogList = () => {
   };
 
   const handleDeleteBlog = (blogId) => {
-    if (window.confirm("Are you sure you want to delete this blog?")) {
-      deleteBlog(blogId)
-        .then(() => {
-          console.log("Blog deleted successfully");
-          fetchBlogs(); // Refresh blogs after deletion
-        })
-        .catch((error) => {
-          console.error("Error deleting blog:", error);
-        });
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteBlog(blogId)
+          .then(() => {
+            console.log("Blog deleted successfully");
+            fetchBlogs(); // Refresh projects after deletion
+            Swal.fire("Deleted!", "Your Blog has been deleted.", "success");
+          })
+          .catch((error) => {
+            console.error("Error deleting Blog:", error);
+          });
+      }
+    });
   };
 
   return (
@@ -118,6 +130,12 @@ const BlogList = () => {
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
+                Image
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
                 Actions
               </th>
             </tr>
@@ -134,6 +152,13 @@ const BlogList = () => {
                   <div className="text-sm text-gray-900">
                     {blog.description}
                   </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap border-r border-gray-200">
+                  <img
+                    src={`${process.env.REACT_APP_API_BASE_URL}/${blog.blogImage}`}
+                    alt={blog.blogTitle}
+                    className="w-16 h-16 object-cover"
+                  />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <button
